@@ -4,6 +4,8 @@ from fastapi.middleware.cors import CORSMiddleware
 from schema import ChatRequestSchema, FetchChatSchema
 from uuid import uuid4
 import datetime
+from dotenv import load_dotenv
+import os
 
 
 # Dictionary to store chat history for each user
@@ -51,10 +53,9 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# Load OpenAI API key from a file and set it for API requests
-with open("../openai_api_key.txt", "r") as file:
-    api_key = file.read().strip()
-
+# Load OpenAI API key
+load_dotenv()
+api_key = os.getenv("API_KEY")
 client = OpenAI(api_key=api_key)
 
 ################################################
